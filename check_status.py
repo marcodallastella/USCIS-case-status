@@ -50,7 +50,7 @@ search_box
 
 search_term = 'EAC2400450864'
 search_box.send_keys(search_term)
-time.sleep(3)
+time.sleep(5)
 
 def press_enter(driver):
     """
