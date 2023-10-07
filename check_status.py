@@ -25,12 +25,12 @@ def open_browser():
     """
     options = Options()
     options.add_argument("--start-maximized")
+    options.add_argument("-headless")  # Enable headless mode
     
     # Remove all signs of this being an automated browser
     options.set_preference("dom.webdriver.enabled", False)
     options.set_preference("useAutomationExtension", False)
     options.set_preference("marionette.enabled", True)
-    options.headless = True
 
     # Open the browser with the new options
     driver = Firefox(options=options)
