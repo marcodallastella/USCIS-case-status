@@ -116,10 +116,6 @@ timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 #     # Write the data to the CSV file
 #     writer.writerow({"Timestamp": timestamp, "Status": status, "Description": description})
 
-
-# Close the WebDriver
-driver.quit()
-
 # Create a dictionary with the data
 data_dict = {
     'Timestamp': [timestamp],
@@ -140,3 +136,7 @@ df = pd.read_csv('status_check.csv')
 n = len(df)
 
 print(f'The csv file now has {n} rows.')
+
+
+# Close the WebDriver
+driver.quit()
