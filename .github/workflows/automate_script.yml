@@ -5,8 +5,8 @@ on:
   schedule:
     - cron: '*/10 * * * 1-5'  # This schedules the workflow to run every ten minutes
 
-  permissions:
-    contents: write
+permissions:
+  contents: write
 
 jobs:
   automate:
