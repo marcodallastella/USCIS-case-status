@@ -14,5 +14,5 @@ Remember to replace the following variables with the correct information inside 
 * TO_EMAIL: the email you are sending to
 * SENDGRID_API_KEY: your SendGrid API Key. For more info on how to send emails from Python with SendGrid there's [this short and easy video](https://www.youtube.com/watch?v=xCCYmOeubRE).
 
-** Marco Dalla Stella **
+**Marco Dalla Stella**
 [md3934@columbia.edu](mailto:md3934@columbia.edu)
