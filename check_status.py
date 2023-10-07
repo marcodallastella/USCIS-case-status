@@ -55,7 +55,7 @@ search_box = driver.find_element(
 search_box
 
 print('sending keys')
-search_term = 'CASE_NUMBER'
+search_term = CASE_NUMBER
 search_box.send_keys(search_term)
 time.sleep(5)
 
@@ -95,9 +95,11 @@ print(f'Status found: {status}')
 
 time.sleep(2)
 
-description = status_section.find_element(
-    By.TAG_NAME, 'p'
-    ).text
+# description = status_section.find_element(
+#     By.TAG_NAME, 'p'
+#     ).text
+
+description = driver.find_elements(By.TAG_NAME, 'p')[4].text
 
 print(f'Description found: {description}')
 
@@ -137,9 +139,11 @@ try:
     df = pd.read_csv("status_check.csv")
     if not df.empty:
         last_status = df["Status"].iloc[-1]
+        print(f'Last known status was {last_status}')
 except FileNotFoundError:
     # Handle the case where the file doesn't exist initially
     pass
+
 
 
 # Append the data to the existing CSV file (mode='a' for append)
@@ -152,26 +156,26 @@ n = len(df)
 print(f'The csv file now has {n} rows.')
 
 
-# Create an email message
-message = Mail(
-    from_email=os.environ.get('FROM_EMAIL'),
-    to_emails=os.environ.get('TO_EMAIL'),
-    subject='Status Update',
-    html_content=f"""
-    Status is: {status}<br>
-    Description: {description}<br>
-    Timestamp: {timestamp}<br>
-    """)
-    
-try:
-    sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-    response = sg.send(message)
-    print(response.status_code)
-    print(response.body)
-    print(response.headers)
-except Exception as e:
-    print(e.message)
+# Send email if case status has changed
 
+if status != last_status:
+    print('Statos has changed. Sending email')
+    message = Mail(from_email=FROM_EMAIL,
+                    to_emails=TO_EMAIL,
+                    subject='Update of status case USCIS' ,
+                    plain_text_content=f'Your status changed from {last_status} to {status}')
+
+    try:
+        sg = SendGridAPIClient(SENDGRID_API_KEY)
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+
+    except Exception as e:
+        print(e.message)
+else:
+    print('Status has not changed')
 
 # Close the WebDriver
 driver.quit()
