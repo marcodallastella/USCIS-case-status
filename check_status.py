@@ -3,6 +3,7 @@ import random
 import time
 import csv
 from datetime import datetime
+import pandas as pd
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
@@ -100,23 +101,36 @@ print(f'Description found: {description}')
 # Get the current timestamp
 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-# Check if the file "status_check.csv" exists
-file_exists = os.path.isfile("status_check.csv")
+# # Check if the file "status_check.csv" exists
+# file_exists = os.path.isfile("status_check.csv")
 
-# Create and open the CSV file for writing
-with open("status_check.csv", mode="a", newline="") as file:
-    fieldnames = ["Timestamp", "Status", "Description"]
-    writer = csv.DictWriter(file, fieldnames=fieldnames)
+# # Create and open the CSV file for writing
+# with open("status_check.csv", mode="a", newline="") as file:
+#     fieldnames = ["Timestamp", "Status", "Description"]
+#     writer = csv.DictWriter(file, fieldnames=fieldnames)
 
-    # If the file doesn't exist, write the header row
-    if not file_exists:
-        writer.writeheader()
+#     # If the file doesn't exist, write the header row
+#     if not file_exists:
+#         writer.writeheader()
 
-    # Write the data to the CSV file
-    writer.writerow({"Timestamp": timestamp, "Status": status, "Description": description})
+#     # Write the data to the CSV file
+#     writer.writerow({"Timestamp": timestamp, "Status": status, "Description": description})
+
 
 # Close the WebDriver
 driver.quit()
 
-print(status)
-print(description)
+# Create a dictionary with the data
+data_dict = {
+    'Timestamp': [timestamp],
+    'Status': [status],
+    'Description': [description]
+}
+
+# Create a DataFrame from the dictionary
+data = pd.DataFrame(data_dict)
+
+data
+
+# Append the data to the existing CSV file (mode='a' for append)
+data.to_csv('status_check.csv', mode='a', header=False, index=False)
