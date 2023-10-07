@@ -130,7 +130,13 @@ data_dict = {
 # Create a DataFrame from the dictionary
 data = pd.DataFrame(data_dict)
 
-data
+print('Updating .csv file')
 
 # Append the data to the existing CSV file (mode='a' for append)
 data.to_csv('status_check.csv', mode='a', header=False, index=False)
+
+df = pd.read_csv('status_check.csv')
+# Get the number of rows in the DataFrame
+n = len(df)
+
+print(f'The csv file now has {n} rows.')
