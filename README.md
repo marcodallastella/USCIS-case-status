@@ -1,10 +1,10 @@
 # Check USCIS case status
 
-There are various scrapers for the USCIS website on GitHub but the ones I was finding did not seem to work properly. Perhaps, USCIS changed something in the past few years, and trying to connect to the undocumented API results constantly in error messages.
-Because I'm really anxious about my visa, I dedicated a few hours to write a scraper that sends me an email as soon as the USCIS case status changes. Here's a short breakdown of the code:
+If you are applying for a :us:US visa you might find yourself constantly checking the USCIS website for updates - which can be quite nerve-wracking.
+I searched for USCIS scrapers that could automatically notify me of any changes, but the ones I came across were outdated and no longer functional (at least didn’t work for me). I decided to give it a try with Selenium, GitHub Actions and SendGrid and ended up with a script that checks my status and sends me an email if anything changes (and writes in a .csv file the status every time it runs - not really sure how that would be useful but I wanted to keep a log it). As of now it runs every ten minutes from Monday to Friday.
 
 Main script is `check_status.py`. It uses Selenium to check on the USCIS website, look for the case number and identify case status and description.
-It reads the lat entry of the `status_check.csv` file. If the case status has changed, it sends an email notifying about the change.
+It reads the last entry in the `status_check.csv` file. If the case status has changed, it sends an email notifying about the change.
 Every time it runs it writes the data to a `status_check.csv` file.
 
 Remember to replace the following variables with the correct information in among the GitHub Secrets.
