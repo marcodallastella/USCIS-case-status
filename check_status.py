@@ -79,9 +79,13 @@ status_section = driver.find_element(
     '/html/body/div/div/main/div/div/div/div[1]/div[1]/div[1]'
 )
 
+time.sleep(2)
+
 status = status_section.find_element(
     By.TAG_NAME, 'h2'
     ).text
+
+time.sleep(2)
 
 description = status_section.find_element(
     By.TAG_NAME, 'p'
