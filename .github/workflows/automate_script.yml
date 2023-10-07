@@ -25,6 +25,12 @@ jobs:
       run: pip install -r requirements.txt  # You may need to create a requirements.txt file with your script's dependencies
 
     - name: Run script
+      env:
+        CASE_NUMBER: ${{ secrets.CASE_NUMBER }}
+        FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+        SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+        TO_EMAIL: ${{ secrets.TO_EMAIL }}
+
       run: python check_status.py 
 
     - name: Commit and push any changes

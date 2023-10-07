@@ -55,7 +55,7 @@ search_box = driver.find_element(
 search_box
 
 print('sending keys')
-search_term = CASE_NUMBER
+search_term = os.environ.get('CASE_NUMBER')
 search_box.send_keys(search_term)
 time.sleep(5)
 
@@ -160,13 +160,21 @@ print(f'The csv file now has {n} rows.')
 
 if status != last_status:
     print('Statos has changed. Sending email')
-    message = Mail(from_email=FROM_EMAIL,
-                    to_emails=TO_EMAIL,
+
+    # Get the values of FROM_EMAIL and TO_EMAIL from environment variables
+    from_email = os.environ.get('FROM_EMAIL')
+    to_email = os.environ.get('TO_EMAIL')
+
+    message = Mail(from_email=from_email,
+                    to_emails=to_email,
                     subject='Update of status case USCIS' ,
                     plain_text_content=f'Your status changed from {last_status} to {status}')
 
     try:
-        sg = SendGridAPIClient(SENDGRID_API_KEY)
+        # Get the SendGrid API key from environment variables
+        sendgrid_api_key = os.environ.get('SENDGRID_API_KEY')
+
+        sg = SendGridAPIClient(sendgrid_api_key)
         response = sg.send(message)
         print(response.status_code)
         print(response.body)
