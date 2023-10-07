@@ -39,6 +39,7 @@ def open_browser():
 driver = open_browser()
 time.sleep(3)
 
+print('going to the url')
 url = 'https://egov.uscis.gov/'
 driver.get(url)
 time.sleep(5)
@@ -49,6 +50,7 @@ search_box = driver.find_element(
 )
 search_box
 
+print('sending keys')
 search_term = 'EAC2400450864'
 search_box.send_keys(search_term)
 time.sleep(5)
@@ -85,11 +87,15 @@ status = status_section.find_element(
     By.TAG_NAME, 'h2'
     ).text
 
+print(f'Status found: {status}')
+
 time.sleep(2)
 
 description = status_section.find_element(
     By.TAG_NAME, 'p'
     ).text
+
+print(f'Description found: {description}')
 
 # Get the current timestamp
 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
