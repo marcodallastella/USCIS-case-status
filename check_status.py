@@ -52,7 +52,7 @@ search_box = driver.find_element(
 search_box
 
 print('sending keys')
-search_term = 'EAC2400450864'
+search_term = 'CASE_NUMBER'
 search_box.send_keys(search_term)
 time.sleep(5)
 
