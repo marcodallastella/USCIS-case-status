@@ -2,7 +2,7 @@ name: Automate Script
 
 on:
   schedule:
-    - cron: '*/2 * * * *'  # This schedules the workflow to run every minute
+    - cron: '*/10 * * * *'  # This schedules the workflow to run every ten minutes
 
 jobs:
   automate:
