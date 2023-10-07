@@ -40,7 +40,7 @@ time.sleep(3)
 
 url = 'https://egov.uscis.gov/'
 driver.get(url)
-time.sleep(3)
+time.sleep(5)
 
 search_box = driver.find_element(
     By.XPATH, 
@@ -52,15 +52,25 @@ search_term = 'EAC2400450864'
 search_box.send_keys(search_term)
 time.sleep(5)
 
+case_status_box = driver.find_element(
+    By.XPATH,
+    '/html/body/div/div/main/div/div/div/div[1]/div[1]/button')
+
+case_status_box.click()
+
 def press_enter(driver):
     """
     Sends the ENTER to a webdriver instance.
     """
     actions = ActionChains(driver)
     actions.send_keys(Keys.ENTER)
-    actions.perform()
+#     actions.perform()
+    
+    
+time.sleep(1)
     
 press_enter(driver)
+
 time.sleep(3)
 
 status_section = driver.find_element(
