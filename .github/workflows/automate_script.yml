@@ -3,7 +3,7 @@ name: Automate Script
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/10 * * * 1-5'  # This schedules the workflow to run every ten minutes
+    - cron: '0 * * * *'  # Every hour at 0 minutes
 
 permissions:
   contents: write
