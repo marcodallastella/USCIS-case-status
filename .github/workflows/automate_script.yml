@@ -5,6 +5,9 @@ on:
   schedule:
     - cron: '*/10 * * * 1-5'  # This schedules the workflow to run every ten minutes
 
+  permissions:
+    contents: write
+
 jobs:
   automate:
     runs-on: ubuntu-latest
