@@ -1,0 +1,24 @@
+name: Automate Script
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'  # This schedules the workflow to run every ten minutes
+
+jobs:
+  automate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'  # Specify your desired Python version
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt  # You may need to create a requirements.txt file with your script's dependencies
+
+    - name: Run script
+      run: python check_status.py 
