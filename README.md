@@ -7,7 +7,7 @@ Main script is `check_status.py`. It uses Selenium to check on the USCIS website
 It reads the last entry in the `status_check.csv` file. If the case status has changed, it sends an email notifying about the change.
 Every time it runs it writes the data to a `status_check.csv` file.
 
-Remember to replace the following variables with the correct information in among the GitHub Secrets.
+Remember to replace the following variables with the correct information inside GitHub Secrets.
 
 * CASE_NUMBER: your USCIS case number
 * FROM_EMAIL: the email you are sending from (must be authenticated on SendGrid)
