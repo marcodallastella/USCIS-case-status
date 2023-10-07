@@ -17,6 +17,9 @@ from selenium.common.exceptions import (
     WebDriverException,
 )
 
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import (Mail, Attachment, FileContent, FileName, FileType, Disposition)
+
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver import Firefox
 
@@ -125,8 +128,19 @@ data_dict = {
 
 # Create a DataFrame from the dictionary
 data = pd.DataFrame(data_dict)
-
 print('Updating .csv file')
+
+# Read the last recorded `status` value from the CSV file
+last_status = ""
+
+try:
+    df = pd.read_csv("status_check.csv")
+    if not df.empty:
+        last_status = df["Status"].iloc[-1]
+except FileNotFoundError:
+    # Handle the case where the file doesn't exist initially
+    pass
+
 
 # Append the data to the existing CSV file (mode='a' for append)
 data.to_csv('status_check.csv', mode='a', header=False, index=False)
@@ -136,6 +150,27 @@ df = pd.read_csv('status_check.csv')
 n = len(df)
 
 print(f'The csv file now has {n} rows.')
+
+
+# Create an email message
+message = Mail(
+    from_email=os.environ.get('FROM_EMAIL'),
+    to_emails=os.environ.get('TO_EMAIL'),
+    subject='Status Update',
+    html_content=f"""
+    Status is: {status}<br>
+    Description: {description}<br>
+    Timestamp: {timestamp}<br>
+    """)
+    
+try:
+    sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+    response = sg.send(message)
+    print(response.status_code)
+    print(response.body)
+    print(response.headers)
+except Exception as e:
+    print(e.message)
 
 
 # Close the WebDriver
