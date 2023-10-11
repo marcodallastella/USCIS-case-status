@@ -46,7 +46,7 @@ time.sleep(3)
 print('going to the url')
 url = 'https://egov.uscis.gov/'
 driver.get(url)
-time.sleep(5)
+time.sleep(10)
 
 search_box = driver.find_element(
     By.XPATH, 
@@ -57,7 +57,7 @@ search_box
 print('sending keys')
 search_term = os.environ.get('CASE_NUMBER')
 search_box.send_keys(search_term)
-time.sleep(5)
+time.sleep(10)
 
 case_status_box = driver.find_element(
     By.XPATH,
@@ -74,18 +74,18 @@ def press_enter(driver):
 #     actions.perform()
     
     
-time.sleep(1)
+time.sleep(5)
     
 press_enter(driver)
 
-time.sleep(3)
+time.sleep(10)
 
 status_section = driver.find_element(
     By.XPATH, 
     '/html/body/div/div/main/div/div/div/div[1]/div[1]/div[1]'
 )
 
-time.sleep(2)
+time.sleep(3)
 
 status = status_section.find_element(
     By.TAG_NAME, 'h2'
@@ -93,7 +93,7 @@ status = status_section.find_element(
 
 print(f'Status found: {status}')
 
-time.sleep(2)
+time.sleep(3)
 
 # description = status_section.find_element(
 #     By.TAG_NAME, 'p'
