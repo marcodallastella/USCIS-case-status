@@ -78,7 +78,7 @@ time.sleep(5)
     
 press_enter(driver)
 
-time.sleep(10)
+time.sleep(8)
 
 status_section = driver.find_element(
     By.XPATH, 
