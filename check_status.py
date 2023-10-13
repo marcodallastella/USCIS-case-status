@@ -1,9 +1,10 @@
 import os
 import random
-import time
+from time import sleep
 import csv
 from datetime import datetime
 import pandas as pd
+from random import randint
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
@@ -41,12 +42,12 @@ def open_browser():
     return driver
 
 driver = open_browser()
-time.sleep(3)
+sleep(randint(5,15))
 
 print('going to the url')
 url = 'https://egov.uscis.gov/'
 driver.get(url)
-time.sleep(10)
+sleep(randint(5,15))
 
 search_box = driver.find_element(
     By.XPATH, 
@@ -57,7 +58,7 @@ search_box
 print('sending keys')
 search_term = os.environ.get('CASE_NUMBER')
 search_box.send_keys(search_term)
-time.sleep(10)
+sleep(randint(5,15))
 
 case_status_box = driver.find_element(
     By.XPATH,
@@ -74,18 +75,18 @@ def press_enter(driver):
 #     actions.perform()
     
     
-time.sleep(5)
+sleep(randint(5,15))
     
 press_enter(driver)
 
-time.sleep(8)
+sleep(randint(5,15))
 
 status_section = driver.find_element(
     By.XPATH, 
     '/html/body/div/div/main/div/div/div/div[1]/div[1]/div[1]'
 )
 
-time.sleep(3)
+sleep(randint(5,15))
 
 status = status_section.find_element(
     By.TAG_NAME, 'h2'
@@ -93,7 +94,7 @@ status = status_section.find_element(
 
 print(f'Status found: {status}')
 
-time.sleep(3)
+sleep(randint(5,15))
 
 # description = status_section.find_element(
 #     By.TAG_NAME, 'p'
