@@ -90,6 +90,12 @@ while True:
 
     sleep(randint(5,15))
 
+     # Re-locate the status_section element within the loop
+    status_section = driver.find_element(
+        By.XPATH, 
+        '/html/body/div/div/main/div/div/div/div[1]/div[1]/div[1]'
+    )
+
     status = status_section.find_element(
         By.TAG_NAME, 'h2'
         ).text
