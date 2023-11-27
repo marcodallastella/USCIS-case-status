@@ -41,56 +41,50 @@ def open_browser():
     driver = Firefox(options=options)
     return driver
 
-driver = open_browser()
-sleep(randint(5,15))
+while True:
 
-print('going to the url')
-url = 'https://egov.uscis.gov/'
-driver.get(url)
-sleep(randint(5,15))
+    driver = open_browser()
+    sleep(randint(5,15))
 
-search_box = driver.find_element(
-    By.XPATH, 
-    '//*[@id="receipt_number"]'
-)
-search_box
+    print('going to the url')
+    url = 'https://egov.uscis.gov/'
+    driver.get(url)
+    sleep(randint(5,15))
 
-print('sending keys')
-search_term = os.environ.get('CASE_NUMBER')
-search_box.send_keys(search_term)
-sleep(randint(5,15))
+    search_box = driver.find_element(
+        By.XPATH, 
+        '//*[@id="receipt_number"]'
+    )
 
-case_status_box = driver.find_element(
-    By.XPATH,
-    '/html/body/div/div/main/div/div/div/div[1]/div[1]/button')
+    print('sending keys')
+    search_term = os.environ.get('CASE_NUMBER')
 
-case_status_box.click()
+    # search_box.send_keys('XXXXXXXX')
 
-def press_enter(driver):
-    """
-    Sends the ENTER to a webdriver instance.
-    """
-    actions = ActionChains(driver)
-    actions.send_keys(Keys.ENTER)
+    search_box.send_keys(search_term)
+    sleep(randint(5,15))
+
+    case_status_box = driver.find_element(
+        By.XPATH,
+        '/html/body/div/div/main/div/div/div/div[1]/div[1]/button')
+
+    case_status_box.click()
+
+    def press_enter(driver):
+        """
+        Sends the ENTER to a webdriver instance.
+        """
+        actions = ActionChains(driver)
+        actions.send_keys(Keys.ENTER)
+
 #     actions.perform()
     
+    sleep(randint(5,15))
     
-sleep(randint(5,15))
-    
-press_enter(driver)
-
-sleep(randint(5,15))
-
-status_section = driver.find_element(
-    By.XPATH, 
-    '/html/body/div/div/main/div/div/div/div[1]/div[1]/div[1]'
-)
-
-while True:
+    press_enter(driver)
 
     sleep(randint(5,15))
 
-     # Re-locate the status_section element within the loop
     status_section = driver.find_element(
         By.XPATH, 
         '/html/body/div/div/main/div/div/div/div[1]/div[1]/div[1]'
@@ -104,13 +98,15 @@ while True:
 
     sleep(randint(5,15))
 
-    if status!= "Check Case Status":
-        break
+    if status == "Check Case Status":
+        # If status is "Check Case Status," close the driver and restart the loop
+        print("Status is 'Check Case Status.' Restarting from the beginning.")
+        driver.quit()
+        sleep(randint(5,15))
+        continue  # Restart the loop
 
-    # Sleep for a while before fetching again
-    sleep_interval = random.randint(5, 15)
-    print(f'Sleeping for {sleep_interval} seconds before checking again.')
-    sleep(sleep_interval)
+    else:
+        break
 
 # Now you can continue with the rest of your code
 print("Status is different from 'Check Case Status'. Continuing with the code.")
