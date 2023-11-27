@@ -86,15 +86,29 @@ status_section = driver.find_element(
     '/html/body/div/div/main/div/div/div/div[1]/div[1]/div[1]'
 )
 
-sleep(randint(5,15))
+while True:
 
-status = status_section.find_element(
-    By.TAG_NAME, 'h2'
-    ).text
+    sleep(randint(5,15))
 
-print(f'Status found: {status}')
+    status = status_section.find_element(
+        By.TAG_NAME, 'h2'
+        ).text
 
-sleep(randint(5,15))
+    print(f'Status found: {status}')
+
+    sleep(randint(5,15))
+
+    if status!= "Check Case Status":
+        break
+
+    # Sleep for a while before fetching again
+    sleep_interval = random.randint(5, 15)
+    print(f'Sleeping for {sleep_interval} seconds before checking again.')
+    sleep(sleep_interval)
+
+# Now you can continue with the rest of your code
+print("Status is different from 'Check Case Status'. Continuing with the code.")
+
 
 # description = status_section.find_element(
 #     By.TAG_NAME, 'p'
